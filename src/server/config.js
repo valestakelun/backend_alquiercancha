@@ -3,7 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import {dirname} from "path";
 import {fileURLToPath} from "url";
-
+import './bdconfig.js'
 export default class Server {
   constructor() {
     this.app = express();
