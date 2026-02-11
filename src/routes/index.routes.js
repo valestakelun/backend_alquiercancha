@@ -1,8 +1,9 @@
 import { Router } from "express";
-import canchasRoutes from "./canchas.routes";
+import canchasroutes from "./canchas.routes.js"
 
-const router = Router();
-http://localhost:3000/api/canchas
-router.use('/canchas', canchasRoutes)
+const router = Router()
+router.use('/canchas', canchasroutes)
+
+//http://localhost:3000/api/canchas
 
 export default router;

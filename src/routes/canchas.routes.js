@@ -1,8 +1,7 @@
-import { Router } from "express"; 
-import { listarCanchas } from "../controllers/canchas.controllers.js"; 
+import { Router } from "express";
+import { crearReserva, listarCanchas } from "../controllers/canchas.controllers.js";
 
 const router = Router();
 
-router.route("/").get(listarCanchas);
-
+router.route("/").post(crearReserva).get(listarCanchas)
 export default router;
