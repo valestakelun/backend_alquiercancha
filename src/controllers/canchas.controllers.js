@@ -3,7 +3,4 @@ export const listarCanchas = (req, res) => {
   res.send("✅ Ruta de canchas funcionando!");
 };
 
-export const getCanchaById = (req, res) => {
-  res.send("Cancha por ID");
-};
 
