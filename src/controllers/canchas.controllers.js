@@ -4,13 +4,14 @@ export const crearReserva = async (req, res) => {
   try {
     // agregar validacion de datos
     const reservaNuevo = new Reserva(req.body);
+    
     await reservaNuevo.save();
     res.status(201).json({ mensaje: "La reserva fue creada correctamente" });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar crear una reserva" });
+      .json({ mensaje: "Ocurrio un error al intentar crear una reserva",error: error.message });
   }
 };
 export const listarCanchas = async (req, res) => {
