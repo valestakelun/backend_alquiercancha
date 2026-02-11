@@ -4,6 +4,7 @@ import morgan from "morgan";
 import {dirname} from "path";
 import {fileURLToPath} from "url";
 import './bdconfig.js'
+import indexRoutes from "../routes/index.routes.js";
 export default class Server {
   constructor() {
     this.app = express();
@@ -18,7 +19,7 @@ export default class Server {
     this.app.use(morgan("dev")); 
     const __dirname = dirname(fileURLToPath(import.meta.url))
     this.app.use(express.static(__dirname + '/../../public'))
-    
+    this.app.use("/api", indexRoutes);
   }
 
   listen() {
