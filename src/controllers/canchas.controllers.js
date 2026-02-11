@@ -1,3 +1,5 @@
+import Reserva from "../models/cancha.js";
+
 export const listarCanchas = async (req, res) => {
   try {
     const reservas = await Reserva.find();

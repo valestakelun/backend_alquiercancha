@@ -3,6 +3,6 @@ import canchasRoutes from "./canchas.routes";
 
 const router = Router();
 http://localhost:3000/api/canchas
-router.route("/canchas").get(canchasRoutes);
+router.use('/canchas', canchasRoutes)
 
 export default router;
