@@ -43,7 +43,7 @@ const reservaSchema = new mongoose.Schema(
 );
 
 // Índice compuesto para evitar que se reserve la misma cancha a la misma hora el mismo día
- reservaSchema.index({ cancha: 1, fecha: 1, hora: 1 }, { unique: true });
+reservaSchema.index({ cancha: 1, fecha: 1, hora: 1 }, { unique: true });
 
 const Reserva = mongoose.model("Reserva", reservaSchema);
 
