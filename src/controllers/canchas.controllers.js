@@ -1,7 +1,5 @@
 import Reserva from "../models/cancha.js";
 
-
-
 export const crearReserva = async (req, res) => {
   try {
     // agregar validacion de datos
@@ -16,13 +14,13 @@ export const crearReserva = async (req, res) => {
   }
 };
 export const listarCanchas = async (req, res) => {
-  try {
-    const reservas = await Reserva.find();
-    res.status(200).json(reservas);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar listar las reservas" });
-  }
+  try {
+    const reservas = await Reserva.find();
+    res.status(200).json(reservas);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error al intentar listar las reservas" });
+  }
 };
