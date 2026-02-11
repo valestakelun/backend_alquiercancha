@@ -3,6 +3,6 @@ import { listarCanchas } from "../controllers/canchas.controllers.js";
 
 const router = Router();
 
-router.route("/canchas").get(listarCanchas);
+router.route("/").get(listarCanchas);
 
 export default router;
