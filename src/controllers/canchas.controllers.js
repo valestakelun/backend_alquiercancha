@@ -25,6 +25,28 @@ export const listarCanchas = async (req, res) => {
       .json({ mensaje: "Ocurrio un error al intentar listar las reservas" });
   }
 };
+<<<<<<< feature/putCanchas
+
+export const editarReserva = async (req, res) => {
+  try {
+    const reservaBuscada = await Reserva.findById(req.params.id);
+    if (!reservaBuscada) {
+      return res
+        .status(404)
+        .json({ mensaje: "No se encontro la reserva con el ID enviado" });
+    }
+    await Reserva.updateOne({ _id: req.params.id }, req.body);
+    res
+      .status(200)
+      .json({ mensaje: "Se actualizo la reserva correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar editar una reserva",
+    });
+  }
+};
+=======
  //buscar canchas por id
 export const obtenerCanchaPorId = async (req, res) => {
   try {
@@ -41,3 +63,4 @@ export const obtenerCanchaPorId = async (req, res) => {
       .json({ mensaje: "Ocurrio un error al intentar listar la reserva" });
   }
 };        
+>>>>>>> dev
