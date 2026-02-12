@@ -1,31 +1,37 @@
 import mongoose from "mongoose";
 
-// ✅ Modelo Usuario para login único (admin y user)
+// ✅ Modelo Usuario (admin y user usan el mismo login)
 const usuarioSchema = new mongoose.Schema(
   {
     nombre: {
       type: String,
-      required: true,
+      required: [true, "El nombre es obligatorio"],
       minlength: 2,
       maxlength: 60,
+      trim: true, // ✅ elimina espacios adelante y atrás
     },
+
     email: {
       type: String,
-      required: true,
       unique: true,
-      lowercase: true,
-      trim: true,
+      required: [true, "El correo electrónico es obligatorio"],
+      trim: true, // ✅ elimina espacios
+      lowercase: true, // ✅ guarda siempre en minúsculas
+      match: [/\S+@\S+\.\S+/, "Email incorrecto"], // ✅ valida formato básico
     },
-    // ✅ se guarda el HASH de la password
+
+    // ⚠️ Acá se guarda el HASH de la contraseña
     password: {
       type: String,
-      required: true,
+      required: [true, "La contraseña es obligatoria"],
     },
+
     role: {
       type: String,
       enum: ["admin", "user"],
       default: "user",
     },
+
     active: {
       type: Boolean,
       default: true,
