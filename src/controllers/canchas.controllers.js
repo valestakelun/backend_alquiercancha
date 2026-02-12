@@ -4,14 +4,17 @@ export const crearReserva = async (req, res) => {
   try {
     // agregar validacion de datos
     const reservaNuevo = new Reserva(req.body);
-    
+
     await reservaNuevo.save();
     res.status(201).json({ mensaje: "La reserva fue creada correctamente" });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar crear una reserva",error: error.message });
+      .json({
+        mensaje: "Ocurrio un error al intentar crear una reserva",
+        error: error.message,
+      });
   }
 };
 export const listarCanchas = async (req, res) => {
@@ -25,7 +28,6 @@ export const listarCanchas = async (req, res) => {
       .json({ mensaje: "Ocurrio un error al intentar listar las reservas" });
   }
 };
-<<<<<<< feature/putCanchas
 
 export const editarReserva = async (req, res) => {
   try {
@@ -36,9 +38,7 @@ export const editarReserva = async (req, res) => {
         .json({ mensaje: "No se encontro la reserva con el ID enviado" });
     }
     await Reserva.updateOne({ _id: req.params.id }, req.body);
-    res
-      .status(200)
-      .json({ mensaje: "Se actualizo la reserva correctamente" });
+    res.status(200).json({ mensaje: "Se actualizo la reserva correctamente" });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -46,8 +46,7 @@ export const editarReserva = async (req, res) => {
     });
   }
 };
-=======
- //buscar canchas por id
+//buscar canchas por id
 export const obtenerCanchaPorId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,11 +55,11 @@ export const obtenerCanchaPorId = async (req, res) => {
       return res.status(404).json({ mensaje: "La reserva no existe" });
     } else {
       res.status(200).json(reserva);
-    }         
+    }
   } catch (error) {
     console.error(error);
-    res     .status(500)
+    res
+      .status(500)
       .json({ mensaje: "Ocurrio un error al intentar listar la reserva" });
   }
-};        
->>>>>>> dev
+};

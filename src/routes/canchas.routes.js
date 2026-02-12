@@ -1,16 +1,10 @@
 import { Router } from "express";
-<<<<<<< feature/putCanchas
-import { crearReserva, listarCanchas, editarReserva } from "../controllers/canchas.controllers.js";
-=======
-import { crearReserva, listarCanchas, obtenerCanchaPorId} from "../controllers/canchas.controllers.js";
->>>>>>> dev
+
+import { crearReserva, listarCanchas, obtenerCanchaPorId, editarReserva} from "../controllers/canchas.controllers.js";
 
 const router = Router();
 
 router.route("/").post(crearReserva).get(listarCanchas)
-<<<<<<< feature/putCanchas
-router.route("/:id").put(editarReserva)
-=======
-router.route("/:id").get(obtenerCanchaPorId)
->>>>>>> dev
+
+router.route("/:id").get(obtenerCanchaPorId).put(editarReserva)
 export default router;
