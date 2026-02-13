@@ -19,19 +19,18 @@ const productoSchema = new mongoose.Schema(
     precio: {
       type: Number,
       required: [true, "El precio es obligatorio"],
-      min: 40000,
+      min: 20000,
     },
 
     stock: {
       type: Number,
       default: 0,
-      min: 20,
+      min: 1,
     },
 
     categoria: {
       type: String,
-      enum: ["ropa", "calzado", "accesorios", "equipamiento"],
-      required: [true, "La categoría es obligatoria"],
+     required: [true, "La categoría es obligatoria"],
       enum: {
         values: ["bebidas", "ropa", "calzado", "accesorios", "equipamiento"],
         message: "{VALUE} no es una categoría válida",
@@ -40,8 +39,8 @@ const productoSchema = new mongoose.Schema(
 
     subcategoria: {
       type: String,
-      required: true,
-      required: [true, "La subcategoría es obligatoria"],
+      trim: true,
+       required: [true, "La subcategoría es obligatoria"],
     },
 
     marca: {
