@@ -10,4 +10,7 @@ router.use("/usuarios", usuariosRouter);
 // ✅ /api/canchas/...
 router.use("/canchas", canchasroutes);
 
+// ✅ /api/productos/...
+router.use("/productos", productosRouter);
+
 export default router;
