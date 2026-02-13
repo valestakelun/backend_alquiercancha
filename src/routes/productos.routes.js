@@ -1,3 +1,8 @@
+import { Router } from "express";
+import {
+  crearProducto,
+  borrarProductoPorId,
+} from "../controllers/productos.controller.js";
 
 
 const router = Router();
