@@ -11,3 +11,17 @@ export const crearProducto = async (req, res) => {
     res.status(500).json({ mensaje: "Error al crear producto" });
   }
 };
+// ELIMINAR
+export const borrarProductoPorId = async (req, res) => {
+  try {
+    const producto = await Producto.findByIdAndDelete(req.params.id);
+
+    if (!producto) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+
+    res.status(200).json({ mensaje: "Producto eliminado" });
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al eliminar producto" });
+  }
+};
