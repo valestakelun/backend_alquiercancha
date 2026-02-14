@@ -5,6 +5,10 @@ import { validarCampos } from "../middlewares/validarCampos.js";
 const router = Router();
 
 // ✅ POST /api/usuarios/login
-router.post("/login", login);
-
+router.post(
+  "/login",
+  validacionesLogin,
+  validarCampos,
+  login
+);
 export default router;
