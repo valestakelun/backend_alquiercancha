@@ -12,3 +12,14 @@ export const crearProducto = async (req, res) => {
   }
 };
 
+export const listarProductos = async (req, res) => {
+  try {
+    const productos = await Producto.find();
+    res.status(200).json(productos);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error al intentar mostrar los productos" });
+  }
+};
