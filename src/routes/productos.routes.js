@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.post("/", crearProducto).get(listarProductos);
+router.route("/").post(crearProducto).get(listarProductos)
 router.route("/:id").get(obtenerProductoPorId);
 
 
