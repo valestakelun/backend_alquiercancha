@@ -1,14 +1,40 @@
 import Producto from "../models/producto.js";
-// CREAR
+import subirImagenACloudinary from "../helpers/cloudinaryUploader.js";
+
+
 export const crearProducto = async (req, res) => {
   try {
-    const nuevoProducto = new Producto(req.body);
-    await nuevoProducto.save();
+    let imagenUrl =
+      "https://images.pexels.com/photos/5652023/pexels-photo-5652023.jpeg";
 
-    res.status(201).json(nuevoProducto);
+    // 1. Subir a Cloudinary si existe el archivo
+    if (req.file) {
+      const resultado = await subirImagenACloudinary(req.file.buffer);
+      imagenUrl = resultado.secure_url;
+    }
+
+    // 2. Unir la URL de la imagen con el resto de los datos
+   
+    const datosProducto = {
+      ...req.body,
+      imagen: imagenUrl,
+    };
+
+    // 3. Crear instancia con el modelo correcto (Producto)
+    const productoNuevo = new Producto(datosProducto);
+
+    await productoNuevo.save();
+
+    res.status(201).json({
+      mensaje: "El producto fue creado correctamente",
+      producto: productoNuevo,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ mensaje: "Error al crear producto" });
+    console.error("Error detallado:", error);
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar crear un producto",
+      error: error.message, 
+    });
   }
 };
 
