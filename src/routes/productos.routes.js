@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
   crearProducto,
   listarProductos,
-  obtenerProductoPorId
+  obtenerProductoPorId,
+  borrarProducto
 } from "../controllers/productos.controllers.js";
 
 import upload from "../helpers/upload.js";
@@ -17,6 +18,7 @@ router.route("/")
   .get(listarProductos);
 
 router.route("/:id")
-  .get(obtenerProductoPorId);
+  .get(obtenerProductoPorId)
+  .delete(borrarProducto);
 
 export default router;
