@@ -1,6 +1,7 @@
 import Producto from "../models/producto.js";
 import subirImagenACloudinary from "../helpers/cloudinaryUploader.js";
 import cloudinary from "../helpers/cloudinary.js";
+import mongoose from "mongoose";
 
 export const crearProducto = async (req, res) => {
   try {
@@ -40,33 +41,59 @@ export const crearProducto = async (req, res) => {
 
 
 export const listarProductos = async (req, res) => {
-  try {
-    const productos = await Producto.find();
-    res.status(200).json(productos);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar mostrar los productos" });
+ try {
+  const productos = await Producto.find({ activo: true })
+   .sort({ createdAt: -1 })
+   .select("-__v"); 
+
+  if (productos.length === 0) {
+   return res.status(200).json({
+    mensaje: "Aún no hay productos disponibles en el buffet",
+    productos: []
+   });
   }
+
+  res.status(200).json(productos);
+ } catch (error) {
+  console.error("Error al listar productos:", error);
+  res.status(500).json({
+   mensaje: "Ocurrió un error al intentar mostrar los productos"
+  });
+ }
 };
 
 export const obtenerProductoPorId = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const producto = await Producto.findById(id);
-    if (!producto) {
-      return res.status(404).json({ mensaje: "El producto no existe." });
-    } else {
-      res.status(200).json(producto);
-    }
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar obtener el producto." });
+ try {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+    mensaje: "El ID enviado no tiene un formato válido"
+   });
   }
+
+  const producto = await Producto.findById(id).select("-__v");
+
+  if (!producto) {
+   return res.status(404).json({
+    mensaje: "Lo sentimos, el producto no existe en nuestra base de datos"
+   });
+  }
+
+  if (!producto.activo) {
+   return res.status(403).json({
+    mensaje: "Este producto ya no se encuentra disponible para la venta"
+   });
+  }
+
+  res.status(200).json(producto);
+ } catch (error) {
+  console.error("Error al obtener producto:", error);
+  res.status(500).json({
+   mensaje: "Ocurrió un error al intentar obtener el producto"
+  });
+ }
 };
+
 //vale
 export const borrarProducto = async (req, res) => {
   try {
