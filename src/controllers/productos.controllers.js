@@ -68,3 +68,28 @@ export const obtenerProductoPorId = async (req, res) => {
   }
 };
 
+export const borrarProducto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productoBorrado = await Producto.findByIdAndDelete(id);
+
+    if (!productoBorrado) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+
+    // Limpieza en Cloudinary
+    if (productoBorrado.imagen && !productoBorrado.imagen.includes("pexels.com")) {
+      try {
+        // Extraemos el ID. Nota: Verifica si tu carpeta es 'publici' o 'cancheros'
+        const publicId = `publici/${productoBorrado.imagen.split("/").pop().split(".")[0]}`;
+        await cloudinary.uploader.destroy(publicId);
+      } catch (cloudErr) {
+        console.error("Error en Cloudinary:", cloudErr);
+      }
+    }
+
+    res.status(200).json({ mensaje: "Producto eliminado correctamente" });
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al borrar producto" });
+  }
+};
