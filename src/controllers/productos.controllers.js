@@ -1,6 +1,6 @@
 import Producto from "../models/producto.js";
 import subirImagenACloudinary from "../helpers/cloudinaryUploader.js";
-
+import cloudinary from "../helpers/cloudinary.js";
 
 export const crearProducto = async (req, res) => {
   try {
@@ -67,7 +67,7 @@ export const obtenerProductoPorId = async (req, res) => {
       .json({ mensaje: "Ocurrio un error al intentar obtener el producto." });
   }
 };
-
+//vale
 export const borrarProducto = async (req, res) => {
   try {
     const { id } = req.params;
