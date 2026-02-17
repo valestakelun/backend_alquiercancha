@@ -46,6 +46,27 @@ export const editarReserva = async (req, res) => {
     });
   }
 };
+
+export const borrarReserva = async (req, res) => {
+  try {
+    const reservaBorrada = await Reserva.findByIdAndDelete(req.params.id);
+    if (!reservaBorrada) {
+      return res
+        .status(404)
+        .json({ mensaje: "No se encontro la reserva con el ID enviado" });
+    }
+    
+    console.log(reservaBorrada)
+    res.status(200).json({mensaje:"La reserva fue borrada correctamente"})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar borrar una reserva",
+    });
+  }
+};
+
 //buscar canchas por id
 export const obtenerCanchaPorId = async (req, res) => {
   try {
