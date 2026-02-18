@@ -6,10 +6,7 @@ import generarJWT from "../helpers/generarJWT.js";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-const hashedPassword = await bcrypt.hash("Admin1234$", 10)
-
-console.log(hashedPassword)
-
+    
     // ✅ validación mínima
     if (!email || !password) {
       return res.status(400).json({ mensaje: "Email y password son obligatorios" });
