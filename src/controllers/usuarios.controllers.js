@@ -19,7 +19,7 @@ console.log(hashedPassword)
 
     // ✅ mensaje genérico (seguridad)
     if (!usuario) {
-      return res.status(404).json({ mensaje: "Usuario no se encontro" });
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
 
     if (!usuario.active) {
