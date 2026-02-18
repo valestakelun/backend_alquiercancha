@@ -6,6 +6,9 @@ import generarJWT from "../helpers/generarJWT.js";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+const hashedPassword = await bcrypt.hash("Admin1234$", 10)
+
+console.log(hashedPassword)
 
     // ✅ validación mínima
     if (!email || !password) {
@@ -16,7 +19,7 @@ export const login = async (req, res) => {
 
     // ✅ mensaje genérico (seguridad)
     if (!usuario) {
-      return res.status(401).json({ mensaje: "Credenciales inválidas" });
+      return res.status(404).json({ mensaje: "Usuario no se encontro" });
     }
 
     if (!usuario.active) {
