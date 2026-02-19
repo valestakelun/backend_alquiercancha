@@ -6,7 +6,7 @@ import generarJWT from "../helpers/generarJWT.js";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    
     // ✅ validación mínima
     if (!email || !password) {
       return res.status(400).json({ mensaje: "Email y password son obligatorios" });
@@ -16,7 +16,7 @@ export const login = async (req, res) => {
 
     // ✅ mensaje genérico (seguridad)
     if (!usuario) {
-      return res.status(401).json({ mensaje: "Credenciales inválidas" });
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
 
     if (!usuario.active) {
