@@ -6,10 +6,12 @@ import generarJWT from "../helpers/generarJWT.js";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     // ✅ validación mínima
     if (!email || !password) {
-      return res.status(400).json({ mensaje: "Email y password son obligatorios" });
+      return res
+        .status(400)
+        .json({ mensaje: "Email y password son obligatorios" });
     }
 
     const usuario = await Usuario.findOne({ email });
