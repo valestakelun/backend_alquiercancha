@@ -48,3 +48,54 @@ export const login = async (req, res) => {
     return res.status(500).json({ mensaje: "Error al iniciar sesión" });
   }
 };
+
+export async function registro(req, res) {
+  try {
+    const { nombre, email, password } = req.body;
+
+    // ✅ Validación de campos obligatorios
+    if (!nombre || !email || !password) {
+      return res.status(400).json({
+        message: "Todos los campos son obligatorios",
+      });
+    }
+
+    // ✅ Verificar si el email ya existe
+    const exists = await Usuario.findOne({ email });
+    if (exists) {
+      return res.status(409).json({
+        message: "Email ya registrado",
+      });
+    }
+
+    // ✅ Hashear contraseña antes de guardarla
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    // ⚠️ IMPORTANTE: el modelo usa "password"
+    const user = await Usuario.create({
+      nombre,
+      email,
+      password: passwordHash,
+      role: "user",      // siempre se registra como user
+      active: true,
+    });
+
+    // ✅ Respuesta exitosa
+    return res.status(201).json({
+      message: "Usuario creado correctamente",
+      user: {
+        id: user._id,
+        nombre: user.nombre,
+        email: user.email,
+        role: user.role,
+        active: user.active,
+      },
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Error al registrar usuario",
+    });
+  }
+}
