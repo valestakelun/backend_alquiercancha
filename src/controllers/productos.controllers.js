@@ -120,7 +120,7 @@ export const editarProducto = async (req, res) => {
           const publicId = `publici/${nombreImagen}`;
 
           await cloudinary.uploader.destroy(publicId);
-          console.log("Imagen anterior borrada de Cloudinary");
+         
         } catch (errorCloud) {
           console.error("Error al borrar imagen vieja:", errorCloud);
         }

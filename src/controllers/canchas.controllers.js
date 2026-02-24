@@ -56,7 +56,7 @@ export const borrarReserva = async (req, res) => {
         .json({ mensaje: "No se encontro la reserva con el ID enviado" });
     }
     
-    console.log(reservaBorrada)
+    
     res.status(200).json({mensaje:"La reserva fue borrada correctamente"})
 
   } catch (error) {
