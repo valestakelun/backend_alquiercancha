@@ -2,19 +2,32 @@ import Reserva from "../models/cancha.js";
 
 export const crearReserva = async (req, res) => {
   try {
-    // agregar validacion de datos
-    const reservaNuevo = new Reserva(req.body);
+    const { cancha, fecha, hora } = req.body;
 
+    // 1. Lógica de validación: Verificar si la cancha ya está ocupada
+    const reservaExistente = await Reserva.findOne({
+      cancha: cancha,
+      fecha: fecha,
+      hora: hora
+    });
+
+    if (reservaExistente) {
+      return res.status(400).json({
+        mensaje: "Lo sentimos, esta cancha ya está reservada para ese día y horario. ¡Probá con otro turno!",
+      });
+    }
+
+    // 2. Si la cancha está libre, procedemos a crearla
+    const reservaNuevo = new Reserva(req.body);
     await reservaNuevo.save();
+
     res.status(201).json({ mensaje: "La reserva fue creada correctamente" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        mensaje: "Ocurrio un error al intentar crear una reserva",
-        error: error.message,
-      });
+    res.status(500).json({
+      mensaje: "Ocurrió un error al intentar crear una reserva",
+      error: error.message,
+    });
   }
 };
 export const listarCanchas = async (req, res) => {
