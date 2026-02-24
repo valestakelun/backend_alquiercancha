@@ -53,13 +53,6 @@ export async function registro(req, res) {
   try {
     const { nombre, email, password } = req.body;
 
-    // ✅ Validación de campos obligatorios
-    if (!nombre || !email || !password) {
-      return res.status(400).json({
-        message: "Todos los campos son obligatorios",
-      });
-    }
-
     // ✅ Verificar si el email ya existe
     const exists = await Usuario.findOne({ email });
     if (exists) {

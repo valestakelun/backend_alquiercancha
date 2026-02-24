@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { registro, login } from "../controllers/usuarios.controllers.js";
 import { validacionesLogin } from "../middlewares/validacionesLogin.js";
+import { validacionesRegistro } from "../middlewares/validacionesRegistro.js";
 import { validarCampos } from "../middlewares/validarCampos.js";
 const router = Router();
 
@@ -13,6 +14,11 @@ router.post(
 );
 
 // Registro
-router.post("/registro", registro);
+router.post(
+  "/registro",
+  validacionesRegistro,
+  validarCampos,
+  registro
+);
 
 export default router;
