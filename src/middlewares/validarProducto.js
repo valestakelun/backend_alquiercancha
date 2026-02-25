@@ -32,10 +32,10 @@ const validarProducto = [
   body("subcategoria")
     .notEmpty().withMessage("La subcategoría es obligatoria"),
 
-  body("imagen")
-    .notEmpty().withMessage("La imagen es obligatoria")
-    .matches(/^https:\/\/.+\.(jpg|jpeg|png|gif|webp|bmp|svg)$/)
-    .withMessage("Debe ser una URL de imagen válida (https) y terminar en formato de imagen"),
+ // body("imagen")
+ //   .notEmpty().withMessage("La imagen es obligatoria")
+ //   .matches(/^https:\/\/.+\.(jpg|jpeg|png|gif|webp|bmp|svg)$/)
+  //  .withMessage("Debe ser una URL de imagen válida (https) y terminar en formato de imagen"),
 
   (req, res, next) => {
     resultadoValidacion(req, res, next);
