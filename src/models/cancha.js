@@ -4,7 +4,7 @@ const reservaSchema = new mongoose.Schema(
   {
     usuario: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Usuario", // Debe coincidir con el nombre de tu modelo de Usuarios
+      ref: "Usuario", 
       required: [true, "La reserva debe pertenecer a un usuario"],
     },
     cancha: {
@@ -13,7 +13,7 @@ const reservaSchema = new mongoose.Schema(
         true,
         "Debe especificar la cancha (ej: Cancha 1, Sintético, etc.)",
       ],
-      enum: ["Fútbol 5", "Fútbol 7", "Fútbol 11"], // Puedes ajustar esto a las canchas de tu complejo
+      enum: ["Fútbol 5", "Fútbol 7", "Fútbol 11"], 
     },
     fecha: {
       type: Date,
@@ -22,7 +22,11 @@ const reservaSchema = new mongoose.Schema(
     hora: {
       type: String,
       required: [true, "La hora es obligatoria"],
-      match: [/^([01]\d|2[0-3]):?([0-5]\d)$/, "Formato de hora inválido "],
+      
+      match: [
+        /^(0[9]|1\d|2[0-3]):[0-5]\d$|^(0[0-2]):[0-5]\d$/,
+        "El horario debe estar entre las 09:00 y las 02:00 am"
+      ],
     },
 
     estado: {
@@ -33,7 +37,7 @@ const reservaSchema = new mongoose.Schema(
     precio: {
       type: Number,
       required: true,
-      min: 40000,
+      min: 50000,
       max: 200000,
     },
   },

@@ -5,17 +5,24 @@ import {
   listarProductos,
   obtenerProductoPorId,
   borrarProducto,
-  editarProducto
+  editarProducto,
 } from "../controllers/productos.controllers.js";
-
+import validarProducto from "../middlewares/validarProducto.js";
+import validarIdProducto from "../middlewares/validarIdProducto.js";
 import upload from "../helpers/upload.js";
 import errorMulter from "../middlewares/errorMulter.js";
 
 const router = Router();
 
-// POST con imagen (cloudinary)
-router.route("/").post(upload.single("imagen"), errorMulter, crearProducto).get(listarProductos);
+router
+  .route("/")
+  .post([upload.single("imagen"), errorMulter, validarProducto], crearProducto)
+  .get(listarProductos);
 
-router.route("/:id").get(obtenerProductoPorId).put(editarProducto).delete(borrarProducto);
+router
+  .route("/:id")
+  .get([validarIdProducto], obtenerProductoPorId)
+  .put([validarIdProducto, validarProducto], editarProducto)
+  .delete([validarIdProducto], borrarProducto);
 
 export default router;
