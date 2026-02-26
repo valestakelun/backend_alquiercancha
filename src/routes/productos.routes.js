@@ -11,18 +11,22 @@ import validarProducto from "../middlewares/validarProducto.js";
 import validarIdProducto from "../middlewares/validarIdProducto.js";
 import upload from "../helpers/upload.js";
 import errorMulter from "../middlewares/errorMulter.js";
+import verificarJWT from "../middlewares/verificarJWT.js";
 
 const router = Router();
 
 router
   .route("/")
-  .post([upload.single("imagen"), errorMulter, validarProducto], crearProducto)
+  .post(
+    [verificarJWT, upload.single("imagen"), errorMulter, validarProducto],
+    crearProducto,
+  )
   .get(listarProductos);
 
 router
   .route("/:id")
-  .get([validarIdProducto], obtenerProductoPorId)
-  .put([validarIdProducto, validarProducto], editarProducto)
-  .delete([validarIdProducto], borrarProducto);
+  .get([verificarJWT, validarIdProducto], obtenerProductoPorId)
+  .put([verificarJWT, validarIdProducto, validarProducto], editarProducto)
+  .delete([verificarJWT, validarIdProducto], borrarProducto);
 
 export default router;
