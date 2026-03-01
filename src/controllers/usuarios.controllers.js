@@ -9,7 +9,9 @@ export const login = async (req, res) => {
 
     // ✅ validación mínima
     if (!email || !password) {
-      return res.status(400).json({ mensaje: "Email y password son obligatorios" });
+      return res
+        .status(400)
+        .json({ mensaje: "Email y password son obligatorios" });
     }
 
     const usuario = await Usuario.findOne({ email });
@@ -20,7 +22,9 @@ export const login = async (req, res) => {
     }
 
     if (!usuario.active) {
-      return res.status(403).json({ mensaje: "Usuario inactivo" });
+      return res
+        .status(403)
+        .json({ mensaje: "Debes verificar tu cuenta antes de iniciar sesión" });
     }
 
     // ✅ compara password ingresada contra HASH guardado
