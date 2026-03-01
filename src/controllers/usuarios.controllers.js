@@ -92,3 +92,19 @@ export async function registro(req, res) {
     });
   }
 }
+
+export const listarUsuarios = async (req, res) => {
+  try {
+    // ⚠️ Nunca devolvemos password
+    const usuarios = await Usuario.find().select(
+      "nombre email role active createdAt"
+    );
+
+    return res.status(200).json(usuarios);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      mensaje: "Error al listar usuarios",
+    });
+  }
+};
