@@ -14,7 +14,7 @@ const verificarJWT = (req, res, next) => {
     }
     const payload = jwt.verify(token, process.env.SECRETJWT);
     //puedo extrar la información del payload
-    req.idUsuario = payload.id;
+    req.role = payload.role;
     next();
   } catch (error) {
     console.error(error);
