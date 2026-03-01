@@ -32,6 +32,18 @@ const usuarioSchema = new mongoose.Schema(
       default: "user",
     },
 
+    verificationToken: {
+  type: String,
+},
+
+    verificationTokenExpires: {
+  type: Date,
+},
+
+   verificationLastSentAt: {
+  type: Date,
+},
+
     active: {
       type: Boolean,
       default: true,

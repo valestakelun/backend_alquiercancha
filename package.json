@@ -20,6 +20,7 @@
     "mongodb": "^7.1.0",
     "mongoose": "^9.2.0",
     "morgan": "^1.10.1",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "nodemailer": "^8.0.1"
   }
 }

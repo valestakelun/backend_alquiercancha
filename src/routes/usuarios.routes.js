@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registro, login } from "../controllers/usuarios.controllers.js";
+import { registro, login, verificarCuenta, reenviarVerificacion} from "../controllers/usuarios.controllers.js";
 import { validacionesLogin } from "../middlewares/validacionesLogin.js";
 import { validacionesRegistro } from "../middlewares/validacionesRegistro.js";
 import { validarCampos } from "../middlewares/validarCampos.js";
@@ -20,5 +20,9 @@ router.post(
   validarCampos,
   registro
 );
+
+router.get("/verificar/:token", verificarCuenta);
+
+router.post("/reenviar-verificacion", reenviarVerificacion);
 
 export default router;
