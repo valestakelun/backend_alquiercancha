@@ -2,16 +2,32 @@ import Reserva from "../models/cancha.js";
 
 export const crearReserva = async (req, res) => {
   try {
-    // agregar validacion de datos
+    const { cancha, fecha, hora } = req.body;
+
+    // 1. Lógica de validación: Verificar si la cancha ya está ocupada
+    const reservaExistente = await Reserva.findOne({
+      cancha: cancha,
+      fecha: fecha,
+      hora: hora
+    });
+
+    if (reservaExistente) {
+      return res.status(400).json({
+        mensaje: "Lo sentimos, esta cancha ya está reservada para ese día y horario. ¡Probá con otro turno!",
+      });
+    }
+
+    // 2. Si la cancha está libre, procedemos a crearla
     const reservaNuevo = new Reserva(req.body);
-    
     await reservaNuevo.save();
+
     res.status(201).json({ mensaje: "La reserva fue creada correctamente" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ mensaje: "Ocurrio un error al intentar crear una reserva",error: error.message });
+    res.status(500).json({
+      mensaje: "Ocurrió un error al intentar crear una reserva",
+      error: error.message,
+    });
   }
 };
 export const listarCanchas = async (req, res) => {
@@ -23,5 +39,61 @@ export const listarCanchas = async (req, res) => {
     res
       .status(500)
       .json({ mensaje: "Ocurrio un error al intentar listar las reservas" });
+  }
+};
+
+export const editarReserva = async (req, res) => {
+  try {
+    const reservaBuscada = await Reserva.findById(req.params.id);
+    if (!reservaBuscada) {
+      return res
+        .status(404)
+        .json({ mensaje: "No se encontro la reserva con el ID enviado" });
+    }
+    await Reserva.updateOne({ _id: req.params.id }, req.body);
+    res.status(200).json({ mensaje: "Se actualizo la reserva correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar editar una reserva",
+    });
+  }
+};
+
+export const borrarReserva = async (req, res) => {
+  try {
+    const reservaBorrada = await Reserva.findByIdAndDelete(req.params.id);
+    if (!reservaBorrada) {
+      return res
+        .status(404)
+        .json({ mensaje: "No se encontro la reserva con el ID enviado" });
+    }
+    
+    
+    res.status(200).json({mensaje:"La reserva fue borrada correctamente"})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar borrar una reserva",
+    });
+  }
+};
+
+//buscar canchas por id
+export const obtenerCanchaPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reserva = await Reserva.findById(id);
+    if (!reserva) {
+      return res.status(404).json({ mensaje: "La reserva no existe" });
+    } else {
+      res.status(200).json(reserva);
+    }
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error al intentar listar la reserva" });
   }
 };
