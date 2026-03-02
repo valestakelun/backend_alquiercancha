@@ -11,7 +11,9 @@ export const login = async (req, res) => {
     
     // ✅ validación mínima
     if (!email || !password) {
-      return res.status(400).json({ mensaje: "Email y password son obligatorios" });
+      return res
+        .status(400)
+        .json({ mensaje: "Email y password son obligatorios" });
     }
 
     const usuario = await Usuario.findOne({ email });
@@ -22,7 +24,9 @@ export const login = async (req, res) => {
     }
 
     if (!usuario.active) {
-      return res.status(403).json({ mensaje: "Usuario inactivo" });
+      return res
+        .status(403)
+        .json({ mensaje: "Debes verificar tu cuenta antes de iniciar sesión" });
     }
 
     // ✅ compara password ingresada contra HASH guardado
@@ -50,6 +54,7 @@ export const login = async (req, res) => {
     return res.status(500).json({ mensaje: "Error al iniciar sesión" });
   }
 };
+
 
 export async function registro(req, res) {
   try {
@@ -197,5 +202,69 @@ if (usuario.verificationLastSentAt) {
     return res.status(500).json({
       message: "Error al reenviar verificación",
     });
+    }
+  };
+  
+
+export const listarUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find()
+      .select("nombre email role active createdAt")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json(usuarios);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: "Error al listar usuarios" });
+  }
+};
+
+export const cambiarEstadoUsuario = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { active } = req.body;
+
+    const usuario = await Usuario.findById(id);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+
+    usuario.active = Boolean(active);
+    await usuario.save();
+
+    return res.status(200).json({
+      mensaje: "Estado actualizado correctamente",
+      usuario,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: "Error al cambiar estado" });
+  }
+};
+
+export const cambiarRolUsuario = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    if (!["admin", "user"].includes(role)) {
+      return res.status(400).json({ mensaje: "Rol inválido" });
+    }
+
+    const usuario = await Usuario.findById(id);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+
+    usuario.role = role;
+    await usuario.save();
+
+    return res.status(200).json({
+      mensaje: "Rol actualizado correctamente",
+      usuario,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: "Error al cambiar rol" });
   }
 };
