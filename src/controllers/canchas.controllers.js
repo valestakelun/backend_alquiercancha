@@ -8,12 +8,13 @@ export const crearReserva = async (req, res) => {
     const reservaExistente = await Reserva.findOne({
       cancha: cancha,
       fecha: fecha,
-      hora: hora
+      hora: hora,
     });
 
     if (reservaExistente) {
       return res.status(400).json({
-        mensaje: "Lo sentimos, esta cancha ya está reservada para ese día y horario. ¡Probá con otro turno!",
+        mensaje:
+          "Lo sentimos, esta cancha ya está reservada para ese día y horario. ¡Probá con otro turno!",
       });
     }
 
@@ -32,7 +33,8 @@ export const crearReserva = async (req, res) => {
 };
 export const listarCanchas = async (req, res) => {
   try {
-    const reservas = await Reserva.find();
+    const reservas = await Reserva.find().populate("usuario", "nombre email");
+
     res.status(200).json(reservas);
   } catch (error) {
     console.error(error);
@@ -68,10 +70,8 @@ export const borrarReserva = async (req, res) => {
         .status(404)
         .json({ mensaje: "No se encontro la reserva con el ID enviado" });
     }
-    
-    
-    res.status(200).json({mensaje:"La reserva fue borrada correctamente"})
 
+    res.status(200).json({ mensaje: "La reserva fue borrada correctamente" });
   } catch (error) {
     console.error(error);
     res.status(500).json({
