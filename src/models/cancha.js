@@ -4,7 +4,7 @@ const reservaSchema = new mongoose.Schema(
   {
     usuario: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Usuario", 
+      ref: "usuario", 
       required: [true, "La reserva debe pertenecer a un usuario"],
     },
     cancha: {
