@@ -119,11 +119,10 @@ export const verificarCuenta = async (req, res) => {
     });
 
     if (!usuario) {
-      return res.status(400).json({
-        message: "Token inválido o expirado",
-        expired: true
-      });
-    }
+  return res.redirect(
+    `${process.env.FRONTEND_URL}/verificar-error`
+  ); 
+};
 
     usuario.active = true;
     usuario.verificationToken = null;
