@@ -16,7 +16,7 @@ const reservaSchema = new mongoose.Schema(
       enum: ["Fútbol 5", "Fútbol 7", "Fútbol 11"], 
     },
     fecha: {
-      type: Date,
+      type: String,
       required: [true, "La fecha es obligatoria"],
     },
     hora: {
