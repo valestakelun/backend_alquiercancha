@@ -19,7 +19,7 @@ const productoSchema = new mongoose.Schema(
     precio: {
       type: Number,
       required: [true, "El precio es obligatorio"],
-      min: 20000,
+      min: 500,
     },
 
     stock: {
