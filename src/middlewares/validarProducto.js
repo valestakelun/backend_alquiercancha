@@ -14,8 +14,8 @@ const validarProducto = [
     .notEmpty().withMessage("El precio es obligatorio")
     .isNumeric().withMessage("El precio debe ser un número")
     .custom((valor) => {
-      if (valor < 20000) {
-        throw new Error("El precio mínimo es de $20.000");
+      if (valor < 500) {
+        throw new Error("El precio mínimo es de $500");
       }
       return true;
     }),
