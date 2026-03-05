@@ -3,7 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import {dirname} from "path";
 import {fileURLToPath} from "url";
-import './bdconfig.js'
+import "./bdConfig.js";
 import indexRoutes from "../routes/index.routes.js";
 export default class Server {
   constructor() {
