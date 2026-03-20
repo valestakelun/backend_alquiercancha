@@ -35,8 +35,8 @@ Este proyecto es el backend de una plataforma completa que permite:
 
 1. 📥 **Clonar el repositorio**
    ```bash
-   git clone <url-del-repositorio>
-   cd Proyecto\ Fin\ de\ Modulo\ 3
+   git clone https://github.com/valestakelun/backend_alquiercancha.git
+   cd backend_alquiercancha
    ```
 
 2. 📚 **Instalar dependencias**
