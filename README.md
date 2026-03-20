@@ -282,7 +282,6 @@ El proyecto incluye un middleware personalizado de manejo de errores que:
 | 💻 Jonathan Fiorenza | [@jonathanfiorenza](https://github.com/jonathanfiorenza) |
 | 💻 Valeria Stakelun | [@valestakelun](https://github.com/valestakelun) |
 | 💻 Lucas Basualdo | [@LucasArmando](https://github.com/LucasArmando) |
-| 💻 Jose Casas | [@josecasas12](https://github.com/josecasas12) |
 | 💻 Gaston Gomez | [@Gastongmz04](https://github.com/Gastongmz04) |
 
 ---
