@@ -85,7 +85,6 @@ export async function registro(req, res) {
       verificationTokenExpires: Date.now() + 1000 * 60 * 60, // 1 hora
     });
 
-    const url = `${process.env.BACKEND_URL}/api/usuarios/verificar/${verificationToken}`;
 
     await enviarEmailVerificacion(email, verificationToken);
 

@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const enviarEmailVerificacion = async (email, token) => {
-  const url = `http://localhost:3000/api/usuarios/verificar/${token}`;
+  const url = `${process.env.BACKEND_URL}/api/usuarios/verificar/${token}`;
 
   await transporter.sendMail({
     from: `"Alquiler Cancha" <${process.env.EMAIL_USER}>`,
