@@ -44,7 +44,9 @@ export const crearReserva = async (req, res) => {
 };
 export const listarCanchas = async (req, res) => {
   try {
-    const reservas = await Reserva.find().populate("usuario", "nombre email");
+   const reservas = await Reserva.find()
+  .populate("usuario", "nombre email")
+  .sort({ fecha: 1, hora: 1 });
 
     res.status(200).json(reservas);
   } catch (error) {
